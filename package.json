@@ -1,0 +1,16 @@
+{
+	"name": "natours",
+	"version": "1.0.0",
+	"description": "Project to learn Node, Express and MongoDB",
+	"main": "server.js",
+	"scripts": {
+		"start": "nodemon server.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Daryl Stensland",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.16.4",
+		"morgan": "^1.10.0"
+	}
+}
