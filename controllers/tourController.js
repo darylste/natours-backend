@@ -3,8 +3,8 @@ const Tour = require('../models/tourModel');
 exports.aliasTopTours = (req, res, next) => {
   // returns 5 results, that have the highest rating, ordered by price (low to high).
   req.query.limit = '5';
-  req.query.sort = '-ratingsAverage, price';
-  req.query.fields = 'name,price, ratingsAverage,summary,difficulty';
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
 
   next();
 };
