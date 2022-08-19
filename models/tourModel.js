@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const User = require('./userModel');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -24,8 +25,8 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Tour must have a difficulty.'],
       enum: {
-        values: ['easy', 'medium', 'difficuilt'],
-        message: 'Difficulty must be: easy, medium or difficuilt.',
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty must be: easy, medium or difficult.',
       },
     },
     ratingAvg: {
@@ -76,6 +77,35 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    startLocation: {
+      type: {
+        type: 'String',
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      address: String,
+      description: String,
+    },
+    locations: [
+      {
+        type: {
+          type: 'String',
+          default: 'Point',
+          enum: ['Point'],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user ',
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
