@@ -32,7 +32,7 @@ router.patch('/updateMyPassword', protect, updatePassword);
 router.patch('/updateMyDetails', protect, updateMyDetails);
 router.delete('/deleteMyAccount', protect, deleteMyAccount);
 
-router.route('/').get(getAllUsers).post(createUser);
+router.route('/').get(getAllUsers);
 
 router.route('/:id').get(getSingleUser).patch(updateUser).delete(deleteUser);
 
