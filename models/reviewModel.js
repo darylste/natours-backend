@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Tour = require('./tourModel');
+const User = require('./userModel');
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -39,6 +41,18 @@ const reviewSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'tour',
+    select: '-__v -slug -secretTour',
+  }).populate({
+    path: 'user',
+    select: '-__v -_id -role -passwordChangedAt',
+  });
+
+  next();
+});
 
 const Review = mongoose.model('Review', reviewSchema);
 
