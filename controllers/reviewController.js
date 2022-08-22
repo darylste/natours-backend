@@ -1,35 +1,11 @@
 const Review = require('../models/reviewModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const { updateOne, deleteOne, createOne } = require('./handlerFactory');
-
-exports.getAllReviews = catchAsync(async (req, res, next) => {
-  let filter;
-  if (req.params.tourId) filter = { tour: req.params.tourId };
-
-  const reviews = await Review.find(filter);
-
-  res.status(200).json({
-    status: 'success',
-    results: reviews.length,
-    data: {
-      reviews,
-    },
-  });
-});
-
-exports.getSingleReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findById(req.params.id);
-  if (!review) {
-    return next(new AppError('No review found...', 404));
-  }
-  res.status(200).json({
-    status: 'success',
-    data: {
-      review,
-    },
-  });
-});
+const {
+  updateOne,
+  deleteOne,
+  createOne,
+  getOne,
+  getAll,
+} = require('./handlerFactory');
 
 exports.setUserIds = (req, res, next) => {
   if (!req.body.tour) req.body.tour = req.params.tourId;
@@ -38,5 +14,7 @@ exports.setUserIds = (req, res, next) => {
 };
 
 exports.createReview = createOne(Review);
+exports.getAllReviews = getAll(Review);
+exports.getSingleReview = getOne(Review);
 exports.updateReview = updateOne(Review);
 exports.deleteReview = deleteOne(Review);
