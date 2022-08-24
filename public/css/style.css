@@ -551,7 +551,7 @@ body {
   width: 100%;
 }
 
-.marker {
+.mapboxgl-marker {
   background-image: url('../img/pin.png');
   background-size: cover;
   width: 32px;
