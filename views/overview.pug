@@ -8,7 +8,7 @@ block content
           .card__header
             .card__picture
               .card__picture-overlay &nbsp;
-              img.card__picture-img(src=`img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+              img.card__picture-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
             h3.heading-tertirary
               span= tour.name
 
@@ -39,4 +39,4 @@ block content
             p.card__ratings
               span.card__footer-value= tour.ratingAvg
               span.card__footer-text= ` rating (${tour.ratingQuantity})`
-            a.btn.btn--green.btn--small(href=`/tours/${tour.slug}`) Details
+            a.btn.btn--green.btn--small(href=`/tour/${tour.slug}`) Details
