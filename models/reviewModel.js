@@ -27,13 +27,11 @@ const reviewSchema = new mongoose.Schema(
       required: [true, 'Review must be linked to a tour.'],
     },
 
-    user: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: User,
-        required: [true, 'Review must be linked to a user.'],
-      },
-    ],
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: User,
+      required: [true, 'Review must be linked to a user.'],
+    },
   },
   {
     toJson: { virtuals: true },
