@@ -49,6 +49,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -71,7 +72,10 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
+    console.log(token);
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
   // check token exists
   if (!token) {
@@ -91,6 +95,26 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   // allow access
   req.user = currentUser;
+  next();
+});
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    const decodedToken = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+    // check user still exists
+    const currentUser = await User.findById(decodedToken.id);
+    if (!currentUser) next();
+    // check if user password has been changed
+    if (currentUser.changedPasswordAfter(decodedToken.iat)) {
+      return next();
+    }
+    // allow access
+    res.locals.user = currentUser;
+    return next();
+  }
   next();
 });
 
